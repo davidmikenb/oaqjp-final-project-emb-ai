@@ -1,6 +1,10 @@
 import requests  # Import the requests library to handle HTTP requests
 import json
 
+#
+# Michael David 2025
+#
+#
 
 def emotion_detector(text_to_analyse):  # Define a function named sentiment_analyzer that takes a string input (text_to_analyse)
      # URL of the sentiment analysis service
@@ -26,7 +30,7 @@ def emotion_detector(text_to_analyse):  # Define a function named sentiment_anal
     # find emotion with highest score
     highestEmotion = max(emotions, key = emotions.get)
 
-    result = {
+    results = {
         'anger': emotions["anger"],
         'disgust': emotions["disgust"],
         'fear': emotions["fear"],
@@ -34,7 +38,12 @@ def emotion_detector(text_to_analyse):  # Define a function named sentiment_anal
         'sadness': emotions["sadness"],
         'dominant_emotion': highestEmotion
     }
+    print('\n-------emotion detector output -----------------------')
+    print('{')
+    for key, value in results.items():
+        print(f"{key}: {value}")
+    
+    print('}')
 
-
-    return(result)
+    #return(results)
     #return {'label': label, 'score': score}
