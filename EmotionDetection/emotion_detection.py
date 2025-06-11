@@ -45,5 +45,5 @@ def emotion_detector(text_to_analyse):  # Define a function named sentiment_anal
     
     print('}')
 
-    #return(results)
+    return(results)
     #return {'label': label, 'score': score}
