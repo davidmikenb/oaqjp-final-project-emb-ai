@@ -1,16 +1,20 @@
+"""
+This module is part of my final project
+
+"""
 from flask import Flask, render_template, request
 from EmotionDetection.emotion_detection import emotion_detector
-
 
 app = Flask("Emotion Detector")
 
 @app.route('/')
 def render_homepage():
-    
+    """ renders home page """
     return render_template("index.html")
 
 @app.route("/emotionDetector", methods = ["GET"])
 def sent_analyzer():
+    """ calls emotion detector function and returns response to webpage """
     text = request.args.get('textToAnalyze')
 
     response = emotion_detector(text)
@@ -28,7 +32,7 @@ def sent_analyzer():
         last_comma_index = result.rfind(",")
         if last_comma_index != -1:
             result = result[:last_comma_index] + '.' + result[last_comma_index + 1:]
-        
+
         result += f" The dominant emotion is {response['dominant_emotion']}."
 
     return result
@@ -37,4 +41,3 @@ def sent_analyzer():
 
 if __name__ == "__main__":
     app.run(debug=True,host="0.0.0.0", port=5010)
-    #app.run(debug=True)
