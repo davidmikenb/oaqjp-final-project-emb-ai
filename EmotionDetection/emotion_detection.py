@@ -19,31 +19,36 @@ def emotion_detector(text_to_analyse):  # Define a function named sentiment_anal
     
     # Sending a POST request to the sentiment analysis API
     response = requests.post(url, json=myobj, headers=header)
-
+    print(response)
+    if response.status_code == 400:
+        print("Invalid text! Please try again!")
+        results = {
+            'anger': None,
+            'disgust': None,
+            'fear': None,
+            'joy': None,
+            'sadness': None,
+            'dominant_emotion': None
+        }     
+    elif response.status_code == 200:
     
-    # Parsing the JSON response from the API
-    formatted_response = json.loads(response.text)
+        # Parsing the JSON response from the API
+        formatted_response = json.loads(response.text)
    
-    #convert to a set of emotions
-    emotions = formatted_response["emotionPredictions"][0]["emotion"]   
+        #convert to a set of emotions
+        emotions = formatted_response["emotionPredictions"][0]["emotion"]   
 
-    # find emotion with highest score
-    highestEmotion = max(emotions, key = emotions.get)
+        # find emotion with highest score
+        highestEmotion = max(emotions, key = emotions.get)
 
-    results = {
-        'anger': emotions["anger"],
-        'disgust': emotions["disgust"],
-        'fear': emotions["fear"],
-        'joy': emotions["joy"],
-        'sadness': emotions["sadness"],
-        'dominant_emotion': highestEmotion
-    }
-    print('\n-------emotion detector output -----------------------')
-    print('{')
-    for key, value in results.items():
-        print(f"{key}: {value}")
-    
-    print('}')
+        results = {
+            'anger': emotions["anger"],
+            'disgust': emotions["disgust"],
+            'fear': emotions["fear"],
+            'joy': emotions["joy"],
+            'sadness': emotions["sadness"],
+            'dominant_emotion': highestEmotion
+        }
 
     return(results)
     #return {'label': label, 'score': score}
